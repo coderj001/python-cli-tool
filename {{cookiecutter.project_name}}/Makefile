@@ -52,11 +52,13 @@ _poetry-config:
 		poetry run toml set --toml-path pyproject.toml tool.coverage.report.show_missing TRUE; \
 		poetry run toml set --toml-path pyproject.toml tool.coverage.report.fail_under COVERAGE; \
 		poetry run toml set --toml-path pyproject.toml tool.coverage.report.exclude_lines EXCLUDE_LINES; \
-		sed -i '' 's/"TRUE"/true/g' pyproject.toml; \
-		sed -i '' 's/"COVERAGE"/100/g' pyproject.toml; \
-		sed -i '' 's/"SOURCE"/["{{cookiecutter.pkg_name}}"]/g' pyproject.toml; \
-		sed -i '' 's/"EXCLUDE_LINES"/["if __name__ == .__main__.:"]/g' pyproject.toml; \
-		sed -i '' 's/"poetry-core"/"poetry-core>=1.1.0"/g' pyproject.toml; \
+		if [ -e "pyproject.toml" ]; then \
+			sed 's/"TRUE"/true/g' pyproject.toml > tmpfile && mv tmpfile pyproject.toml; \
+			sed 's/"COVERAGE"/100/g' pyproject.toml > tmpfile && mv tmpfile pyproject.toml; \
+			sed 's/"SOURCE"/["ai_git_commit"]/g' pyproject.toml > tmpfile && mv tmpfile pyproject.toml; \
+			sed 's/"EXCLUDE_LINES"/["if __name__ == .__main__.:"]/g' pyproject.toml > tmpfile && mv tmpfile pyproject.toml; \
+			sed 's/"poetry-core"/"poetry-core>=1.1.0"/g' pyproject.toml > tmpfile && mv tmpfile pyproject.toml; \
+		fi \
 		git add .; \
 		git commit -m "feat: initial commit"; \
     fi
