@@ -12,5 +12,5 @@ brew install python3 cookiecutter poetry
 You can use this project as a starting point by executing:
 
 ```bash
-cookiecutter gh:binxio/python-cli-tool
+cookiecutter gh:coderj001/python-cli-tool
 ```
